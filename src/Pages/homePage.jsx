@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import ParentView from '../Common/ParentView';
+import HttpListener from '../Project-Components/HttpListener';
 import Form from "react-jsonschema-form";
 
 
@@ -16,9 +17,14 @@ const schema = {
 export default class homePage extends Component {
 
     render() {
-        return (<ParentView canvas={this.renderFormFromSchema()}/>);
+        return (<ParentView canvas={this.renderCanvas()}/>);
     }
 
+    renderCanvas() {
+        return(
+            <HttpListener componentProperties={{avatar: 'L', name:'Mocky'}}/>
+        );
+    }
     renderFormFromSchema() {
         return (<Form schema={schema}
                       onChange={log("changed")}
