@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {BrowserRouter} from 'react-router-dom';
 import {Route, Switch} from 'react-router';
-import homePage from './Pages/homePage';
+import designerPager from './Pages/DesignerPager';
 import './App.css';
 
 
@@ -14,7 +14,7 @@ class App extends Component {
         return(
             <BrowserRouter>
                 <Switch>
-                    <Route exact path='/index' component={homePage}/>
+                    <Route exact path='/designer' component={designerPager}/>
                 </Switch>
             </BrowserRouter>
         );
