@@ -36,7 +36,14 @@ export default class designerPager extends Component {
                 {
                     components.map((component, index) => {
                     console.log(component);
-                       return <HttpListener componentProperties={{avatar: 'L', name: 'Mocky'}}/>;
+                    if (component.type === "http-listener") {
+                        return <HttpListener componentProperties={{avatar: 'L', name: 'Mocky'}}/>;
+                    } else if (component.type === "logger") {
+                        return <HttpListener componentProperties={{avatar: 'L', name: 'logger'}}/>;
+                    } else if (component.type === "file-writer") {
+                        return <HttpListener componentProperties={{avatar: 'L', name: 'writer'}}/>;
+                    }
+
                 })
                 }
             </div>);
