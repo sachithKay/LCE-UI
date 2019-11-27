@@ -1,6 +1,7 @@
 import IconButton from "@material-ui/core/IconButton";
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import CloseIcon from '@material-ui/icons/Close';
+import ForwardArrow from '@material-ui/icons/ArrowForward';
 import React, {Component} from "react";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -27,6 +28,7 @@ import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import InputAdornment from "@material-ui/core/InputAdornment";
+import AddComponentButton from "../Common/AddComponentButton";
 
 const useStyles = theme => ({
     card: {
@@ -197,9 +199,10 @@ class HttpListener extends Component {
                         </Card>
                     </div>
                     <div className={classes.buttonDiv}>
-                        <IconButton aria-label="settings">
-                            <AddIcon/>
-                        </IconButton>
+                        <AddComponentButton/>
+                        {/*<IconButton aria-label="settings">*/}
+                        {/*    <ForwardArrow/>*/}
+                        {/*</IconButton>*/}
                     </div>
                 </div>
                 <Dialog className={classes.dialog} open={this.state.open} onClose={this.handleClose}
@@ -247,7 +250,6 @@ class HttpListener extends Component {
                                             <InputLabel htmlFor="outlined-adornment-amount">Path (Required)</InputLabel>
                                             <OutlinedInput
                                                 id="outlined-adornment-amount"
-                                                value={''}
                                                 // onChange={handleChange('amount')}
                                                 startAdornment={<InputAdornment position="start"></InputAdornment>}
                                                 labelWidth={120}
