@@ -6,7 +6,6 @@ import CardHeader from "@material-ui/core/CardHeader";
 import Avatar from "@material-ui/core/Avatar";
 import PropTypes from 'prop-types';
 import AddIcon from '@material-ui/icons/Add';
-import {makeStyles} from '@material-ui/core/styles';
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -98,7 +97,22 @@ class ParentComponent extends Component {
                     </div>
                 </div>
                 <Dialog open={this.state.open} onClose={this.handleClose} aria-labelledby="form-dialog-title">
-                    <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+                    <DialogTitle id="form-dialog-title">
+                        <CardHeader
+                            avatar={
+                                <Avatar aria-label="recipe" style={styles.avatar}>
+                                    {this.props.avatar}
+                                </Avatar>
+                            }
+                            action={
+                                <IconButton aria-label="settings">
+                                    <MoreVertIcon/>
+                                </IconButton>
+                            }
+                            title={this.props.title}
+                            subheader={this.props.subheader}
+                        />
+                    </DialogTitle>
                     <DialogContent>
                         <DialogContentText>
                             To subscribe to this website, please enter your email address here. We will send updates
