@@ -176,34 +176,29 @@ class HttpListener extends Component {
     render() {
         const {classes} = this.props;
         return (
-            <div>
-                <div className={classes.parentDiv}>
-                    <div className={classes.cardDiv}>
-                        <Card className={classes.card}>
-                            <CardActionArea onClick={this.handleClickOpen}>
-                                <CardHeader
-                                    avatar={
-                                        <Avatar aria-label="recipe" className={classes.avatar}>
-                                            {this.state.component.avatar}
-                                        </Avatar>
-                                    }
-                                    action={
-                                        <IconButton aria-label="settings">
-                                            <MoreVertIcon/>
-                                        </IconButton>
-                                    }
-                                    title={'HTTP Listener'}
-                                    subheader={this.state.component.name}
-                                />
-                            </CardActionArea>
-                        </Card>
-                    </div>
-                    <div className={classes.buttonDiv}>
-                        <AddComponentButton/>
-                        {/*<IconButton aria-label="settings">*/}
-                        {/*    <ForwardArrow/>*/}
-                        {/*</IconButton>*/}
-                    </div>
+            <div className={classes.parentDiv}>
+                <div className={classes.cardDiv}>
+                    <Card className={classes.card}>
+                        <CardActionArea onClick={this.handleClickOpen}>
+                            <CardHeader
+                                avatar={
+                                    <Avatar aria-label="recipe" className={classes.avatar}>
+                                        {this.state.component.avatar}
+                                    </Avatar>
+                                }
+                                action={
+                                    <IconButton aria-label="settings">
+                                        <MoreVertIcon/>
+                                    </IconButton>
+                                }
+                                title={'HTTP Listener'}
+                                subheader={this.state.component.name}
+                            />
+                        </CardActionArea>
+                    </Card>
+                </div>
+                <div className={classes.buttonDiv}>
+                    <AddComponentButton/>
                 </div>
                 <Dialog className={classes.dialog} open={this.state.open} onClose={this.handleClose}
                         aria-labelledby="form-dialog-title" maxWidth={'md'} fullWidth={true}>
@@ -311,14 +306,6 @@ class HttpListener extends Component {
                             </TabPanel>
                         </div>
                     </DialogContent>
-                    {/*<DialogActions>*/}
-                    {/*    <Button onClick={this.handleClose} color="primary">*/}
-                    {/*        Cancel*/}
-                    {/*    </Button>*/}
-                    {/*    <Button onClick={this.handleClose} color="primary">*/}
-                    {/*        Subscribe*/}
-                    {/*    </Button>*/}
-                    {/*</DialogActions>*/}
                 </Dialog>
             </div>
         );

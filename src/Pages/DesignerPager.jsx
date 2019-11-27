@@ -2,8 +2,15 @@ import React, {Component} from 'react';
 import ParentView from '../Common/ParentView';
 import HttpListener from '../Project-Components/HttpListener';
 import ResourceApi from '../API/ResourceAPI';
+import withStyles from "@material-ui/core/styles/withStyles";
 
-export default class designerPager extends Component {
+const useStyles = theme => ({
+    componentCanvas: {
+        display: 'flex',
+    }
+});
+
+class DesignerPager extends Component {
 
     constructor(props) {
         super(props);
@@ -28,26 +35,30 @@ export default class designerPager extends Component {
 
     // This method will render the flow based on the json configuration
     renderFlow() {
+        const {classes} = this.props;
         const flow = this.state.flow;
         const components = flow.components;
         if (components != undefined) {
             console.log(components);
-            return (<div id={"component-canvas"}>
+            return (<div id={"component-canvas"} className={classes.componentCanvas}>
                 {
                     components.map((component, index) => {
-                    console.log(component);
-                    if (component.type === "http-listener") {
-                        return <HttpListener componentProperties={{avatar: 'L', name: 'Mocky'}}/>;
-                    } else if (component.type === "logger") {
-                        return <HttpListener componentProperties={{avatar: 'L', name: 'logger'}}/>;
-                    } else if (component.type === "file-writer") {
-                        return <HttpListener componentProperties={{avatar: 'L', name: 'writer'}}/>;
-                    }
+                        console.log(component);
+                        if (component.type === "http-listener") {
+                            return <HttpListener componentProperties={{avatar: 'L', name: 'Mocky'}}/>;
+                        } else if (component.type === "logger") {
+                            return <HttpListener componentProperties={{avatar: 'L', name: 'logger'}}/>;
+                        } else if (component.type === "file-writer") {
+                            return <HttpListener componentProperties={{avatar: 'L', name: 'writer'}}/>;
+                        }
 
-                })
+                    })
                 }
             </div>);
 
         }
     }
 }
+
+export default withStyles(useStyles)(DesignerPager);
+
