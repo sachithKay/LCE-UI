@@ -1,5 +1,5 @@
 {
-  "name": "lce-app",
+  "id": "lce-app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

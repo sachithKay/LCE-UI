@@ -1,19 +1,14 @@
 import IconButton from "@material-ui/core/IconButton";
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import CloseIcon from '@material-ui/icons/Close';
-import ForwardArrow from '@material-ui/icons/ArrowForward';
 import React, {Component} from "react";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import Avatar from "@material-ui/core/Avatar";
 import PropTypes from 'prop-types';
-import AddIcon from '@material-ui/icons/Add';
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
-import TextField from "@material-ui/core/TextField";
-import DialogActions from "@material-ui/core/DialogActions";
-import Button from "@material-ui/core/Button";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
@@ -62,9 +57,6 @@ const useStyles = theme => ({
         backgroundColor: theme.palette.background.paper,
         flexGrow: 1,
         height: 400,
-    },
-    expansionGroup: {
-      width: '100%',
     },
 });
 
@@ -140,7 +132,7 @@ TabPanel.propTypes = {
 };
 
 
-class HttpListener extends Component {
+class Logger extends Component {
 
     constructor(props) {
         super(props);
@@ -195,8 +187,8 @@ class HttpListener extends Component {
                         <CardActionArea onClick={this.handleClickOpen}>
                             <CardHeader
                                 avatar={
-                                    <Avatar aria-label="recipe" className={classes.avatar}>
-                                        {this.state.component.avatar}
+                                    <Avatar aria-label="recipe" className={classes.avatar}>L
+                                        {/*{this.state.component.avatar}*/}
                                     </Avatar>
                                 }
                                 action={
@@ -204,7 +196,7 @@ class HttpListener extends Component {
                                         <MoreVertIcon/>
                                     </IconButton>
                                 }
-                                title={'HTTP Listener'}
+                                title={'Logger'}
                                 subheader={this.state.component.id}
                             />
                         </CardActionArea>
@@ -258,7 +250,7 @@ class HttpListener extends Component {
                                             <InputLabel htmlFor="outlined-adornment-amount">Path (Required)</InputLabel>
                                             <OutlinedInput
                                                 id="outlined-adornment-amount"
-                                                value={this.state.component.properties.path}
+                                                value={this.state.component.properties}
                                                 // onChange={handleChange('amount')}
                                                 startAdornment={<InputAdornment position="start"></InputAdornment>}
                                                 labelWidth={120}
@@ -272,19 +264,13 @@ class HttpListener extends Component {
                                         <Typography>Redelivery</Typography>
                                     </ExpansionPanelSummary>
                                     <ExpansionPanelDetails>
-                                        <div className={classes.expansionGroup}>
-                                        <h5>Redelivery policy</h5>
-                                        <FormControl fullWidth className={classes.margin} variant="outlined">
-                                            <InputLabel htmlFor="outlined-adornment-amount">Max Redelivery Count</InputLabel>
-                                            <OutlinedInput
-                                                id="outlined-adornment-amount"
-                                                value={5}
-                                                // onChange={handleChange('amount')}
-                                                startAdornment={<InputAdornment position="start"></InputAdornment>}
-                                                labelWidth={120}
-                                            />
-                                        </FormControl>
-                                        </div>
+                                        <Typography>
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+                                            malesuada lacus ex,
+                                            sit amet blandit leo lobortis eget. Lorem ipsum dolor sit amet, consectetur
+                                            adipiscing
+                                            elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.
+                                        </Typography>
                                     </ExpansionPanelDetails>
                                 </ExpansionPanel>
                                 <ExpansionPanel square expanded={this.state.expanded === 'panel3'}
@@ -333,4 +319,4 @@ class HttpListener extends Component {
 
 }
 
-export default withStyles(useStyles)(HttpListener);
+export default withStyles(useStyles)(Logger);

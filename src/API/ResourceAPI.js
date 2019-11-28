@@ -18,6 +18,6 @@ export default class ResourceAPI {
     }
 
     getflow() {
-        return this.getHTTPClient().get("/5ddcf778340000f057eae617");
+        return this.getHTTPClient().get("/5ddf597c310000345e3ae6b0");
     }
 }

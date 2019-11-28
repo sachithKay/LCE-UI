@@ -3,6 +3,7 @@ import ParentView from '../Common/ParentView';
 import HttpListener from '../Project-Components/HttpListener';
 import ResourceApi from '../API/ResourceAPI';
 import withStyles from "@material-ui/core/styles/withStyles";
+import Logger from "../Project-Components/Logger";
 
 const useStyles = theme => ({
     componentCanvas: {
@@ -15,7 +16,9 @@ class DesignerPager extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            flow: {}
+            flow: {
+                components: [],
+            }
         };
     }
 
@@ -28,6 +31,28 @@ class DesignerPager extends Component {
         });
     }
 
+    addNewComponent = (component) => {
+        if (component !== null || component !== undefined) {
+            const currentComp = component.component;
+            const nextComp = component.nextComponent;
+            const components = this.state.flow.components;
+            console.log(components);
+            let stateCopy = JSON.parse(JSON.stringify(this.state.flow));
+            console.log(stateCopy);
+
+            for (let i = 0; i < components.length; i++) {
+                if (components[i].id === currentComp.id) {
+                    components.splice(i + 1, 0, nextComp);
+                    // components.push(nextComp);
+                    stateCopy.components = components;
+                    break;
+                }
+            }
+            console.log(stateCopy);
+            this.setState({flow:stateCopy}, () => console.log(this.state.flow.components));
+        }
+    };
+
     render() {
         return (<ParentView canvas={this.renderFlow()}/>);
     }
@@ -38,18 +63,19 @@ class DesignerPager extends Component {
         const {classes} = this.props;
         const flow = this.state.flow;
         const components = flow.components;
-        if (components != undefined) {
-            console.log(components);
+        if (components !== undefined) {
             return (<div id={"component-canvas"} className={classes.componentCanvas}>
                 {
                     components.map((component, index) => {
                         console.log(component);
                         if (component.type === "http-listener") {
-                            return <HttpListener componentProperties={{avatar: 'L', name: 'Mocky'}}/>;
+                            return <HttpListener componentProperties={component}
+                                                 addNewComponentHandler={this.addNewComponent}/>;
                         } else if (component.type === "logger") {
-                            return <HttpListener componentProperties={{avatar: 'L', name: 'logger'}}/>;
+                            return <Logger componentProperties={component}
+                                           addNewComponentHandler={this.addNewComponent}/>;
                         } else if (component.type === "file-writer") {
-                            return <HttpListener componentProperties={{avatar: 'L', name: 'writer'}}/>;
+                            // return <HttpListener componentProperties={{avatar: 'L', name: 'writer'}}/>;
                         }
 
                     })

@@ -2,7 +2,6 @@ import IconButton from "@material-ui/core/IconButton";
 import ForwardArrowIcon from '@material-ui/icons/ArrowForward';
 import AddIcon from '@material-ui/icons/Add';
 import CloseIcon from '@material-ui/icons/Close';
-import SearchIcon from '@material-ui/icons/Search';
 import React, {Component} from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Dialog from "@material-ui/core/Dialog";
@@ -11,8 +10,12 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import DialogContent from "@material-ui/core/DialogContent";
 import TextField from "@material-ui/core/TextField";
 import CardHeader from "@material-ui/core/CardHeader";
-import Paper from "@material-ui/core/Paper";
-import InputBase from "@material-ui/core/InputBase";
+import InputLabel from "@material-ui/core/InputLabel";
+import OutlinedInput from "@material-ui/core/OutlinedInput";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import FormControl from "@material-ui/core/FormControl";
+import DialogActions from "@material-ui/core/DialogActions";
+import Button from "@material-ui/core/Button";
 
 const useStyles = theme => ({
     cardHeader: {
@@ -34,34 +37,22 @@ class AddComponentButton extends Component {
         super(props);
         this.state = {
             isHovered: false,
-            component: [
-                {code: 'AD', label: 'Andorra', phone: '376'},
-                {code: 'AE', label: 'United Arab Emirates', phone: '971'},
-                {code: 'AF', label: 'Afghanistan', phone: '93'},
-                {code: 'AG', label: 'Antigua and Barbuda', phone: '1-268'},
-                {code: 'AI', label: 'Anguilla', phone: '1-264'},
-                {code: 'AL', label: 'Albania', phone: '355'},
-                {code: 'AM', label: 'Armenia', phone: '374'},
-                {code: 'AO', label: 'Angola', phone: '244'},
-                {code: 'AD', label: 'Andorra', phone: '376'},
-                {code: 'AE', label: 'United Arab Emirates', phone: '971'},
-                {code: 'AF', label: 'Afghanistan', phone: '93'},
-                {code: 'AG', label: 'Antigua and Barbuda', phone: '1-268'},
-                {code: 'AI', label: 'Anguilla', phone: '1-264'},
-                {code: 'AL', label: 'Albania', phone: '355'},
-                {code: 'AM', label: 'Armenia', phone: '374'},
-                {code: 'AO', label: 'Angola', phone: '244'},
+            componentsList: [
+                {code: 'logger', label: 'Logger'},
+                {code: 'http-listener', label: 'HTTP Listener'},
             ],
             dialogOpen: false,
+            component: {
+                id: '',
+                type: '',
+            }
         };
     }
 
     toggleHover = () => {
-        this.setState(prevState => ({
-            isHovered: !prevState.isHovered,
-            component: prevState.component,
-            dialogOpen: prevState.dialogOpen,
-        }));
+        let stateCopy = JSON.parse(JSON.stringify(this.state));
+        stateCopy.isHovered = !stateCopy.isHovered;
+        this.setState(stateCopy);
     };
 
     handleClickOpen = () => {
@@ -76,10 +67,30 @@ class AddComponentButton extends Component {
         this.setState(stateCopy);
     };
 
-    countryToFlag = (isoCode) => {
-        return typeof String.fromCodePoint !== 'undefined'
-            ? isoCode.toUpperCase().replace(/./g, char => String.fromCodePoint(char.charCodeAt(0) + 127397))
-            : isoCode;
+    handleNameInput = (event) => {
+        let stateCopy = JSON.parse(JSON.stringify(this.state));
+        stateCopy.component.id = event.target.value;
+        this.setState(stateCopy);
+    };
+
+    handleComponentSelect = (event, value) => {
+        let stateCopy = JSON.parse(JSON.stringify(this.state));
+        if (value !== null || value !== undefined) {
+            stateCopy.component.type = value.code;
+        }
+        this.setState(stateCopy);
+    };
+
+    handleSubmit = (event) => {
+        if (this.state.component.id !== '' && this.state.component.type !== '') {
+            this.props.addComponentHandler(this.state.component);
+            event.preventDefault();
+            this.handleClose();
+        } else if (this.state.component.id === '') {
+            alert('Component id should not be empty!');
+        } else {
+            alert('You should select a component to proceed!');
+        }
     };
 
     render() {
@@ -108,15 +119,24 @@ class AddComponentButton extends Component {
                                         </div>
                                     }
                                     title={'Select Component'}
-                            // subheader={this.state.component.name}
                         />
                     </DialogTitle>
                     <DialogContent>
+                        <FormControl fullWidth className={classes.margin} variant="outlined">
+                            <InputLabel htmlFor="outlined-adornment-amount">Name (Required)</InputLabel>
+                            <OutlinedInput
+                                id="component-name"
+                                value={this.state.component.id}
+                                onChange={this.handleNameInput}
+                                startAdornment={<InputAdornment position="start"></InputAdornment>}
+                                labelWidth={122}
+                            />
+                        </FormControl>
+                        <br/><br/>
                         <Autocomplete
-                            id="country-select-demo"
+                            id="component-select"
                             fullWidth="true"
-                            // style={{width: 100}}
-                            options={this.state.component}
+                            options={this.state.componentsList}
                             classes={{
                                 option: classes.option,
                             }}
@@ -124,8 +144,8 @@ class AddComponentButton extends Component {
                             getOptionLabel={option => option.label}
                             renderOption={option => (
                                 <React.Fragment>
-                                    <span>{this.countryToFlag(option.code)}</span>
-                                    {option.label} ({option.code}) +{option.phone}
+                                    {/*<span>{this.countryToFlag(option.code)}</span>*/}
+                                    {option.label}
                                 </React.Fragment>
                             )}
                             renderInput={params => (
@@ -140,38 +160,16 @@ class AddComponentButton extends Component {
                                     }}
                                 />
                             )}
+                            onChange={(event, value) => this.handleComponentSelect(event, value)}
                         />
-                        <br/>
-                        <Autocomplete
-                            id="country-select-demo"
-                            fullWidth="true"
-                            disabled={true}
-                            options={this.state.component}
-                            classes={{
-                                option: classes.option,
-                            }}
-                            autoHighlight
-                            getOptionLabel={option => option.label}
-                            renderOption={option => (
-                                <React.Fragment>
-                                    <span>{this.countryToFlag(option.code)}</span>
-                                    {option.label} ({option.code}) +{option.phone}
-                                </React.Fragment>
-                            )}
-                            renderInput={params => (
-                                <TextField
-                                    {...params}
-                                    label="Select a Operation"
-                                    variant="outlined"
-                                    fullWidth="true"
-                                    inputProps={{
-                                        ...params.inputProps,
-                                        autoComplete: 'disabled', // disable autocomplete and autofill
-                                    }}
-                                />
-                            )}
-                        />
-                        <br/>
+                        <DialogActions>
+                            <Button onClick={this.handleClose} color="secondary">
+                                Cancel
+                            </Button>
+                            <Button onClick={this.handleSubmit} color="primary">
+                                Submit
+                            </Button>
+                        </DialogActions>
                     </DialogContent>
                 </Dialog>
             </div>
