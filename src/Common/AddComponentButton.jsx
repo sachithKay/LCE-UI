@@ -2,7 +2,6 @@ import IconButton from "@material-ui/core/IconButton";
 import ForwardArrowIcon from '@material-ui/icons/ArrowForward';
 import AddIcon from '@material-ui/icons/Add';
 import CloseIcon from '@material-ui/icons/Close';
-import SearchIcon from '@material-ui/icons/Search';
 import React, {Component} from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Dialog from "@material-ui/core/Dialog";
@@ -11,8 +10,6 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import DialogContent from "@material-ui/core/DialogContent";
 import TextField from "@material-ui/core/TextField";
 import CardHeader from "@material-ui/core/CardHeader";
-import Paper from "@material-ui/core/Paper";
-import InputBase from "@material-ui/core/InputBase";
 
 const useStyles = theme => ({
     cardHeader: {

@@ -1,19 +1,14 @@
 import IconButton from "@material-ui/core/IconButton";
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import CloseIcon from '@material-ui/icons/Close';
-import ForwardArrow from '@material-ui/icons/ArrowForward';
 import React, {Component} from "react";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import Avatar from "@material-ui/core/Avatar";
 import PropTypes from 'prop-types';
-import AddIcon from '@material-ui/icons/Add';
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
-import TextField from "@material-ui/core/TextField";
-import DialogActions from "@material-ui/core/DialogActions";
-import Button from "@material-ui/core/Button";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
@@ -29,6 +24,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import AddComponentButton from "../Common/AddComponentButton";
+import Form from "react-jsonschema-form";
 
 const useStyles = theme => ({
     card: {
@@ -162,12 +158,14 @@ class HttpListener extends Component {
     };
 
     handleChange = (event, newValue) => {
+        this.props.onChange('id', {});
         let stateCopy = JSON.parse(JSON.stringify(this.state));
         stateCopy.tabIndex = newValue;
         this.setState(stateCopy);
     };
 
     handleExpansionPanelChange = panel => () => {
+        this.props.onChange('id', {});
         let stateCopy = JSON.parse(JSON.stringify(this.state));
         stateCopy.expanded = panel;
         this.setState(stateCopy, () => console.log(this.state));
@@ -224,87 +222,7 @@ class HttpListener extends Component {
                         />
                     </DialogTitle>
                     <DialogContent>
-                        <div className={classes.tabsDiv}>
-                            <AppBar position="static" color={"default"}>
-                                <Tabs value={this.state.tabIndex} onChange={this.handleChange}
-                                      aria-label="simple tabs example" indicatorColor="primary"
-                                      textColor="primary" centered>
-                                    <Tab label="Configuration" {...a11yProps(0)} />
-                                    <Tab label="Output" {...a11yProps(1)} />
-                                    <Tab label="Notes" {...a11yProps(2)} />
-                                </Tabs>
-                            </AppBar>
-                            <TabPanel value={this.state.tabIndex} index={0}>
-                                <ExpansionPanel square expanded={this.state.expanded === 'panel1'}
-                                                onChange={this.handleExpansionPanelChange('panel1')}>
-                                    <ExpansionPanelSummary aria-controls="panel1d-content" id="panel1d-header">
-                                        <Typography>General</Typography>
-                                    </ExpansionPanelSummary>
-                                    <ExpansionPanelDetails>
-                                        <FormControl fullWidth className={classes.margin} variant="outlined">
-                                            <InputLabel htmlFor="outlined-adornment-amount">Path (Required)</InputLabel>
-                                            <OutlinedInput
-                                                id="outlined-adornment-amount"
-                                                // onChange={handleChange('amount')}
-                                                startAdornment={<InputAdornment position="start"></InputAdornment>}
-                                                labelWidth={120}
-                                            />
-                                        </FormControl>
-                                    </ExpansionPanelDetails>
-                                </ExpansionPanel>
-                                <ExpansionPanel square expanded={this.state.expanded === 'panel2'}
-                                                onChange={this.handleExpansionPanelChange('panel2')}>
-                                    <ExpansionPanelSummary aria-controls="panel2d-content" id="panel2d-header">
-                                        <Typography>Redelivery</Typography>
-                                    </ExpansionPanelSummary>
-                                    <ExpansionPanelDetails>
-                                        <Typography>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                                            malesuada lacus ex,
-                                            sit amet blandit leo lobortis eget. Lorem ipsum dolor sit amet, consectetur
-                                            adipiscing
-                                            elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.
-                                        </Typography>
-                                    </ExpansionPanelDetails>
-                                </ExpansionPanel>
-                                <ExpansionPanel square expanded={this.state.expanded === 'panel3'}
-                                                onChange={this.handleExpansionPanelChange('panel3')}>
-                                    <ExpansionPanelSummary aria-controls="panel3d-content" id="panel3d-header">
-                                        <Typography>Response</Typography>
-                                    </ExpansionPanelSummary>
-                                    <ExpansionPanelDetails>
-                                        <Typography>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                                            malesuada lacus ex,
-                                            sit amet blandit leo lobortis eget. Lorem ipsum dolor sit amet, consectetur
-                                            adipiscing
-                                            elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.
-                                        </Typography>
-                                    </ExpansionPanelDetails>
-                                </ExpansionPanel>
-                                <ExpansionPanel square expanded={this.state.expanded === 'panel4'}
-                                                onChange={this.handleExpansionPanelChange('panel4')}>
-                                    <ExpansionPanelSummary aria-controls="panel4d-content" id="panel4d-header">
-                                        <Typography>Advanced</Typography>
-                                    </ExpansionPanelSummary>
-                                    <ExpansionPanelDetails>
-                                        <Typography>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                                            malesuada lacus ex,
-                                            sit amet blandit leo lobortis eget. Lorem ipsum dolor sit amet, consectetur
-                                            adipiscing
-                                            elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.
-                                        </Typography>
-                                    </ExpansionPanelDetails>
-                                </ExpansionPanel>
-                            </TabPanel>
-                            <TabPanel value={this.state.tabIndex} index={1}>
-                                Item Two
-                            </TabPanel>
-                            <TabPanel value={this.state.tabIndex} index={2}>
-                                Item Three
-                            </TabPanel>
-                        </div>
+                        <Form schema={this.state.component.JSONSchema} uiSchema={this.state.component.UISchema} formData={this.state.component.formData} />
                     </DialogContent>
                 </Dialog>
             </div>

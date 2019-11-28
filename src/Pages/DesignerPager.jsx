@@ -32,20 +32,29 @@ class DesignerPager extends Component {
         return (<ParentView canvas={this.renderFlow()}/>);
     }
 
+    // This method will handle all changes made to component
+    // id: unique id of the component
+    // def: new json definition of the component
+    componentChanged(id, def) {
+    console.log("change triggred");
+    // edit the flow configuration and update the backend
+
+    }
+
 
     // This method will render the flow based on the json configuration
     renderFlow() {
         const {classes} = this.props;
         const flow = this.state.flow;
         const components = flow.components;
-        if (components != undefined) {
+        if (components) {
             console.log(components);
             return (<div id={"component-canvas"} className={classes.componentCanvas}>
                 {
                     components.map((component, index) => {
                         console.log(component);
                         if (component.type === "http-listener") {
-                            return <HttpListener componentProperties={{avatar: 'L', name: 'Mocky'}}/>;
+                            return <HttpListener componentProperties={component} onChange={this.componentChanged}/>;
                         } else if (component.type === "logger") {
                             return <HttpListener componentProperties={{avatar: 'L', name: 'logger'}}/>;
                         } else if (component.type === "file-writer") {
