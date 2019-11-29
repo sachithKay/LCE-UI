@@ -47,8 +47,8 @@ class DesignerPager extends Component {
                     break;
                 }
             }
-            console.log(stateCopy);
-            this.setState({flow:stateCopy}, () => console.log(this.state.flow.components));
+            this.setState({flow:stateCopy});
+
         }
     };
 
@@ -63,12 +63,11 @@ class DesignerPager extends Component {
             return (<div id={"component-canvas"} className={classes.componentCanvas}>
                 {
                     this.state.flow.components.map((component, index) => {
-                        console.log(component);
                         if (component.type === "http-listener") {
-                            return <HttpListener key={index} componentProperties={component}
+                            return <HttpListener key={component.id} componentProperties={component}
                                                  addNewComponentHandler={this.addNewComponent}/>;
                         } else if (component.type === "logger") {
-                            return <Logger key={index} componentProperties={component}
+                            return <Logger key={component.id} componentProperties={component}
                                            addNewComponentHandler={this.addNewComponent}/>;
                         } else if (component.type === "file-writer") {
                             // return <HttpListener componentProperties={{avatar: 'L', name: 'writer'}}/>;

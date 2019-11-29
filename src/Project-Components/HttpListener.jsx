@@ -1,14 +1,19 @@
 import IconButton from "@material-ui/core/IconButton";
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import CloseIcon from '@material-ui/icons/Close';
+import ForwardArrow from '@material-ui/icons/ArrowForward';
 import React, {Component} from "react";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import Avatar from "@material-ui/core/Avatar";
 import PropTypes from 'prop-types';
+import AddIcon from '@material-ui/icons/Add';
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
+import TextField from "@material-ui/core/TextField";
+import DialogActions from "@material-ui/core/DialogActions";
+import Button from "@material-ui/core/Button";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
@@ -139,14 +144,12 @@ class HttpListener extends Component {
 
     constructor(props) {
         super(props);
-
         let id = this.props.componentProperties.id ? this.props.componentProperties.id : '';
         let type = this.props.componentProperties.type ? this.props.componentProperties.type : '';
         let path = '';
         if (this.props.componentProperties.properties) {
             path = this.props.componentProperties.properties.path ? this.props.componentProperties.properties.path : '';
         }
-
         this.state = {
             open: false,
             tabIndex: 0,
@@ -158,6 +161,7 @@ class HttpListener extends Component {
                     path: path,
                 },
             },
+            key: this.props.key,
             nextComponent: {
                 type: '',
                 id: '',
@@ -206,11 +210,11 @@ class HttpListener extends Component {
                                 avatar={
                                     <Avatar aria-label="recipe" className={classes.avatar}>H</Avatar>
                                 }
-                                // action={
-                                //     <IconButton aria-label="settings">
-                                //         <MoreVertIcon/>
-                                //     </IconButton>
-                                // }
+                                action={
+                                    <IconButton aria-label="settings">
+                                        <MoreVertIcon/>
+                                    </IconButton>
+                                }
                                 title={'HTTP Listener'}
                                 subheader={this.state.component.id}
                             />

@@ -148,6 +148,7 @@ class Logger extends Component {
                 id: id,
                 type: type,
             },
+            key: this.props.key,
             nextComponent: {
                 id: '',
                 type: '',
@@ -198,11 +199,6 @@ class Logger extends Component {
                                         {/*{this.state.component.avatar}*/}
                                     </Avatar>
                                 }
-                                // action={
-                                //     <IconButton aria-label="settings">
-                                //         <MoreVertIcon/>
-                                //     </IconButton>
-                                // }
                                 title={'Logger'}
                                 subheader={this.state.component.id}
                             />
@@ -272,11 +268,7 @@ class Logger extends Component {
                                     </ExpansionPanelSummary>
                                     <ExpansionPanelDetails>
                                         <Typography>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                                            malesuada lacus ex,
-                                            sit amet blandit leo lobortis eget. Lorem ipsum dolor sit amet, consectetur
-                                            adipiscing
-                                            elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.
+
                                         </Typography>
                                     </ExpansionPanelDetails>
                                 </ExpansionPanel>
