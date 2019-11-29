@@ -35,16 +35,15 @@ class DesignerPager extends Component {
         if (component !== null || component !== undefined) {
             const currentComp = component.component;
             const nextComp = component.nextComponent;
-            const components = this.state.flow.components;
-            console.log(components);
+            let arr = this.state.flow.components;
+            console.log(arr);
             let stateCopy = JSON.parse(JSON.stringify(this.state.flow));
             console.log(stateCopy);
 
-            for (let i = 0; i < components.length; i++) {
-                if (components[i].id === currentComp.id) {
-                    components.splice(i + 1, 0, nextComp);
-                    // components.push(nextComp);
-                    stateCopy.components = components;
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i].id === currentComp.id) {
+                    arr.splice(i + 1, 0, nextComp);
+                    stateCopy.components = arr;
                     break;
                 }
             }
@@ -57,22 +56,19 @@ class DesignerPager extends Component {
         return (<ParentView canvas={this.renderFlow()}/>);
     }
 
-
     // This method will render the flow based on the json configuration
     renderFlow() {
         const {classes} = this.props;
-        const flow = this.state.flow;
-        const components = flow.components;
-        if (components !== undefined) {
+        if (this.state.flow.components) {
             return (<div id={"component-canvas"} className={classes.componentCanvas}>
                 {
-                    components.map((component, index) => {
+                    this.state.flow.components.map((component, index) => {
                         console.log(component);
                         if (component.type === "http-listener") {
-                            return <HttpListener componentProperties={component}
+                            return <HttpListener key={index} componentProperties={component}
                                                  addNewComponentHandler={this.addNewComponent}/>;
                         } else if (component.type === "logger") {
-                            return <Logger componentProperties={component}
+                            return <Logger key={index} componentProperties={component}
                                            addNewComponentHandler={this.addNewComponent}/>;
                         } else if (component.type === "file-writer") {
                             // return <HttpListener componentProperties={{avatar: 'L', name: 'writer'}}/>;

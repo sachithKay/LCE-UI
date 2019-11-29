@@ -191,11 +191,11 @@ class Logger extends Component {
                                         {/*{this.state.component.avatar}*/}
                                     </Avatar>
                                 }
-                                action={
-                                    <IconButton aria-label="settings">
-                                        <MoreVertIcon/>
-                                    </IconButton>
-                                }
+                                // action={
+                                //     <IconButton aria-label="settings">
+                                //         <MoreVertIcon/>
+                                //     </IconButton>
+                                // }
                                 title={'Logger'}
                                 subheader={this.state.component.id}
                             />
