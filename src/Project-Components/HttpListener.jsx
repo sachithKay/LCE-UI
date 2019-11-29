@@ -139,11 +139,26 @@ class HttpListener extends Component {
 
     constructor(props) {
         super(props);
+
+        let id = this.props.componentProperties.id ? this.props.componentProperties.id : '';
+        let type = this.props.componentProperties.type ? this.props.componentProperties.type : '';
+        let path = '';
+        if (this.props.componentProperties.properties) {
+            path = this.props.componentProperties.properties.path ? this.props.componentProperties.properties.path : '';
+        }
+
         this.state = {
             open: false,
             tabIndex: 0,
             expanded: 'panel1',
-            component: this.props.componentProperties,
+            // component: this.props.componentProperties,
+            component: {
+                id: id,
+                type: type,
+                properties: {
+                    path: path,
+                },
+            },
             nextComponent: {
                 type: '',
                 id: '',
