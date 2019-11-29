@@ -151,7 +151,6 @@ class HttpListener extends Component {
             open: false,
             tabIndex: 0,
             expanded: 'panel1',
-            // component: this.props.componentProperties,
             component: {
                 id: id,
                 type: type,
@@ -205,9 +204,7 @@ class HttpListener extends Component {
                         <CardActionArea onClick={this.handleClickOpen}>
                             <CardHeader
                                 avatar={
-                                    <Avatar aria-label="recipe" className={classes.avatar}>
-                                        {this.state.component.avatar}
-                                    </Avatar>
+                                    <Avatar aria-label="recipe" className={classes.avatar}>H</Avatar>
                                 }
                                 // action={
                                 //     <IconButton aria-label="settings">

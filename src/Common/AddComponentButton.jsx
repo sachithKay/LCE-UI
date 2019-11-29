@@ -122,7 +122,7 @@ class AddComponentButton extends Component {
                         />
                     </DialogTitle>
                     <DialogContent>
-                        <FormControl fullWidth className={classes.margin} variant="outlined">
+                        <FormControl fullWidth={true} className={classes.margin} variant="outlined">
                             <InputLabel htmlFor="outlined-adornment-amount">Name (Required)</InputLabel>
                             <OutlinedInput
                                 id="component-name"
@@ -135,7 +135,7 @@ class AddComponentButton extends Component {
                         <br/><br/>
                         <Autocomplete
                             id="component-select"
-                            fullWidth="true"
+                            fullWidth={true}
                             options={this.state.componentsList}
                             classes={{
                                 option: classes.option,
@@ -153,7 +153,7 @@ class AddComponentButton extends Component {
                                     {...params}
                                     label="Select a Component"
                                     variant="outlined"
-                                    fullWidth="true"
+                                    fullWidth={true}
                                     inputProps={{
                                         ...params.inputProps,
                                         autoComplete: 'disabled', // disable autocomplete and autofill

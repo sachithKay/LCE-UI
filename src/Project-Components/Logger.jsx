@@ -136,14 +136,21 @@ class Logger extends Component {
 
     constructor(props) {
         super(props);
+
+        let id = this.props.componentProperties.id ? this.props.componentProperties.id : '';
+        let type = this.props.componentProperties.type ? this.props.componentProperties.type : '';
+
         this.state = {
             open: false,
             tabIndex: 0,
             expanded: 'panel1',
-            component: this.props.componentProperties,
+            component: {
+                id: id,
+                type: type,
+            },
             nextComponent: {
-                type: '',
                 id: '',
+                type: '',
             }
         };
     }
