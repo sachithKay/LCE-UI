@@ -139,6 +139,7 @@ class Logger extends Component {
 
         let id = this.props.componentProperties.id ? this.props.componentProperties.id : '';
         let type = this.props.componentProperties.type ? this.props.componentProperties.type : '';
+        let properties = this.props.componentProperties.properties ? this.props.componentProperties.properties : '';
 
         this.state = {
             open: false,
@@ -147,6 +148,7 @@ class Logger extends Component {
             component: {
                 id: id,
                 type: type,
+                properties: properties,
             },
             key: this.props.key,
             nextComponent: {
@@ -177,13 +179,28 @@ class Logger extends Component {
     handleExpansionPanelChange = panel => () => {
         let stateCopy = JSON.parse(JSON.stringify(this.state));
         stateCopy.expanded = panel;
-        this.setState(stateCopy, () => console.log(this.state));
+        this.setState(stateCopy);
     };
 
     addNewComponent = (newComponent) => {
         let stateCopy = JSON.parse(JSON.stringify(this.state));
         stateCopy.nextComponent = newComponent;
         this.setState(stateCopy, () => this.props.addNewComponentHandler(this.state));
+    };
+
+    componentChanged = (event) => {
+
+        let target = event.target.name;
+        let value = event.target.value;
+        // set the new value to state and update the component definition.
+        let {component} = this.state;
+        if (target === "level") {
+            component.properties.level = value;
+        } else if (target === "") {
+            //other properties
+        }
+        this.props.componentChanged(this.state.component.id, component.properties);
+        this.setState({component});
     };
 
     render() {
@@ -227,7 +244,7 @@ class Logger extends Component {
                                     </IconButton>
                                 </div>
                             }
-                            title={'HTTP Listener'}
+                            title={'Logger'}
                             subheader={this.state.component.id}
                         />
                     </DialogTitle>
@@ -246,15 +263,16 @@ class Logger extends Component {
                                 <ExpansionPanel square expanded={this.state.expanded === 'panel1'}
                                                 onChange={this.handleExpansionPanelChange('panel1')}>
                                     <ExpansionPanelSummary aria-controls="panel1d-content" id="panel1d-header">
-                                        <Typography>General</Typography>
+                                        <Typography>Log Level</Typography>
                                     </ExpansionPanelSummary>
                                     <ExpansionPanelDetails>
                                         <FormControl fullWidth className={classes.margin} variant="outlined">
                                             <InputLabel htmlFor="outlined-adornment-amount">Path (Required)</InputLabel>
                                             <OutlinedInput
                                                 id="outlined-adornment-amount"
-                                                value={this.state.component.properties}
-                                                // onChange={handleChange('amount')}
+                                                name="level"
+                                                value={this.state.component.properties.level}
+                                                onChange={this.componentChanged}
                                                 startAdornment={<InputAdornment position="start"></InputAdornment>}
                                                 labelWidth={120}
                                             />
@@ -264,41 +282,11 @@ class Logger extends Component {
                                 <ExpansionPanel square expanded={this.state.expanded === 'panel2'}
                                                 onChange={this.handleExpansionPanelChange('panel2')}>
                                     <ExpansionPanelSummary aria-controls="panel2d-content" id="panel2d-header">
-                                        <Typography>Redelivery</Typography>
+                                        <Typography>Type</Typography>
                                     </ExpansionPanelSummary>
                                     <ExpansionPanelDetails>
                                         <Typography>
 
-                                        </Typography>
-                                    </ExpansionPanelDetails>
-                                </ExpansionPanel>
-                                <ExpansionPanel square expanded={this.state.expanded === 'panel3'}
-                                                onChange={this.handleExpansionPanelChange('panel3')}>
-                                    <ExpansionPanelSummary aria-controls="panel3d-content" id="panel3d-header">
-                                        <Typography>Response</Typography>
-                                    </ExpansionPanelSummary>
-                                    <ExpansionPanelDetails>
-                                        <Typography>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                                            malesuada lacus ex,
-                                            sit amet blandit leo lobortis eget. Lorem ipsum dolor sit amet, consectetur
-                                            adipiscing
-                                            elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.
-                                        </Typography>
-                                    </ExpansionPanelDetails>
-                                </ExpansionPanel>
-                                <ExpansionPanel square expanded={this.state.expanded === 'panel4'}
-                                                onChange={this.handleExpansionPanelChange('panel4')}>
-                                    <ExpansionPanelSummary aria-controls="panel4d-content" id="panel4d-header">
-                                        <Typography>Advanced</Typography>
-                                    </ExpansionPanelSummary>
-                                    <ExpansionPanelDetails>
-                                        <Typography>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                                            malesuada lacus ex,
-                                            sit amet blandit leo lobortis eget. Lorem ipsum dolor sit amet, consectetur
-                                            adipiscing
-                                            elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.
                                         </Typography>
                                     </ExpansionPanelDetails>
                                 </ExpansionPanel>

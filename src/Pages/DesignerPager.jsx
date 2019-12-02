@@ -52,6 +52,22 @@ class DesignerPager extends Component {
         }
     };
 
+    componentChanged = (id, def) => {
+        this.updateFlow(id, def);
+    };
+
+    updateFlow(componentId, definition) {
+        let {flow} = this.state;
+        flow.components.map((component, index) => {
+            if (component.id === componentId) {
+                component.properties = definition;
+            }
+        });
+        // This will send the updated flow schema to the backend
+        new ResourceApi().updateFlow(flow);
+        this.setState({flow});
+    }
+
     render() {
         return (<ParentView canvas={this.renderFlow()}/>);
     }
@@ -65,10 +81,10 @@ class DesignerPager extends Component {
                     this.state.flow.components.map((component, index) => {
                         if (component.type === "http-listener") {
                             return <HttpListener key={component.id} componentProperties={component}
-                                                 addNewComponentHandler={this.addNewComponent}/>;
+                                                 addNewComponentHandler={this.addNewComponent} componentChanged={this.componentChanged}/>;
                         } else if (component.type === "logger") {
                             return <Logger key={component.id} componentProperties={component}
-                                           addNewComponentHandler={this.addNewComponent}/>;
+                                           addNewComponentHandler={this.addNewComponent} componentChanged={this.componentChanged}/>;
                         } else if (component.type === "file-writer") {
                             // return <HttpListener componentProperties={{avatar: 'L', name: 'writer'}}/>;
                         }

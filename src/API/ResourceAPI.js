@@ -20,4 +20,9 @@ export default class ResourceAPI {
     getflow() {
         return this.getHTTPClient().get("/5de0db3f350000225e480e22");
     }
+
+    updateFlow(flow) {
+        // update the flow configuration at server
+        console.log("update flow invoked");
+    }
 }
