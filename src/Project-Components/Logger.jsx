@@ -24,6 +24,10 @@ import InputLabel from "@material-ui/core/InputLabel";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import AddComponentButton from "../Common/AddComponentButton";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import Input from "@material-ui/core/Input";
+import TextField from "@material-ui/core/TextField";
 
 const useStyles = theme => ({
     card: {
@@ -139,7 +143,12 @@ class Logger extends Component {
 
         let id = this.props.componentProperties.id ? this.props.componentProperties.id : '';
         let type = this.props.componentProperties.type ? this.props.componentProperties.type : '';
-        let properties = this.props.componentProperties.properties ? this.props.componentProperties.properties : '';
+        let message = '';
+        let level = '';
+        if (this.props.componentProperties.properties) {
+            message = this.props.componentProperties.properties.message ? this.props.componentProperties.properties.message : '';
+            level = this.props.componentProperties.properties.level ? this.props.componentProperties.properties.level : 'info';
+        }
 
         this.state = {
             open: false,
@@ -148,7 +157,10 @@ class Logger extends Component {
             component: {
                 id: id,
                 type: type,
-                properties: properties,
+                properties: {
+                    message: message,
+                    level: level,
+                },
             },
             key: this.props.key,
             nextComponent: {
@@ -196,8 +208,10 @@ class Logger extends Component {
         let {component} = this.state;
         if (target === "level") {
             component.properties.level = value;
-        } else if (target === "") {
-            //other properties
+        } else if (target === "message") {
+            component.properties.message = value;
+        } else {
+            // other props
         }
         this.props.componentChanged(this.state.component.id, component.properties);
         this.setState({component});
@@ -231,7 +245,7 @@ class Logger extends Component {
                         <CardHeader
                             avatar={
                                 <Avatar aria-label="recipe" className={classes.avatar}>
-                                    {this.state.component.avatar}
+                                    L
                                 </Avatar>
                             }
                             action={
@@ -260,36 +274,31 @@ class Logger extends Component {
                                 </Tabs>
                             </AppBar>
                             <TabPanel value={this.state.tabIndex} index={0}>
-                                <ExpansionPanel square expanded={this.state.expanded === 'panel1'}
-                                                onChange={this.handleExpansionPanelChange('panel1')}>
-                                    <ExpansionPanelSummary aria-controls="panel1d-content" id="panel1d-header">
-                                        <Typography>Log Level</Typography>
-                                    </ExpansionPanelSummary>
-                                    <ExpansionPanelDetails>
-                                        <FormControl fullWidth className={classes.margin} variant="outlined">
-                                            <InputLabel htmlFor="outlined-adornment-amount">Path (Required)</InputLabel>
-                                            <OutlinedInput
-                                                id="outlined-adornment-amount"
-                                                name="level"
-                                                value={this.state.component.properties.level}
-                                                onChange={this.componentChanged}
-                                                startAdornment={<InputAdornment position="start"></InputAdornment>}
-                                                labelWidth={120}
-                                            />
-                                        </FormControl>
-                                    </ExpansionPanelDetails>
-                                </ExpansionPanel>
-                                <ExpansionPanel square expanded={this.state.expanded === 'panel2'}
-                                                onChange={this.handleExpansionPanelChange('panel2')}>
-                                    <ExpansionPanelSummary aria-controls="panel2d-content" id="panel2d-header">
-                                        <Typography>Type</Typography>
-                                    </ExpansionPanelSummary>
-                                    <ExpansionPanelDetails>
-                                        <Typography>
-
-                                        </Typography>
-                                    </ExpansionPanelDetails>
-                                </ExpansionPanel>
+                                <FormControl fullWidth className={classes.margin} variant="outlined">
+                                    <label>Message</label>
+                                    <TextField
+                                        id="message"
+                                        name="message"
+                                        value={this.state.component.properties.message}
+                                        onChange={this.componentChanged}
+                                        variant="outlined"
+                                    />
+                                </FormControl>
+                                <br/><br/>
+                                <FormControl fullWidth className={classes.margin} variant="outlined">
+                                    <label>Level</label>
+                                    <Select
+                                        id="outlined-adornment-amount"
+                                        name="level"
+                                        value={this.state.component.properties.level}
+                                        onChange={this.componentChanged}>
+                                        <MenuItem value={'error'}>Error</MenuItem>
+                                        <MenuItem value={'warn'}>Warn</MenuItem>
+                                        <MenuItem value={'info'}>Info</MenuItem>
+                                        <MenuItem value={'debug'}>Debug</MenuItem>
+                                        <MenuItem value={'trace'}>Trace</MenuItem>
+                                    </Select>
+                                </FormControl>
                             </TabPanel>
                             <TabPanel value={this.state.tabIndex} index={1}>
                                 Item Two

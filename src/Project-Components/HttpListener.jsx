@@ -199,6 +199,21 @@ class HttpListener extends Component {
         this.setState(stateCopy, () => this.props.addNewComponentHandler(this.state));
     };
 
+    componentChanged = (event) => {
+
+        let target = event.target.name;
+        let value = event.target.value;
+        let {component} = this.state;
+        if (target === "path") {
+            component.properties.path = value;
+        } else if (target === "") {
+            //other properties
+        }
+        this.props.componentChanged(this.state.component.id, component.properties);
+        this.setState({component});
+    };
+
+
     render() {
         const {classes} = this.props;
         return (
@@ -230,7 +245,7 @@ class HttpListener extends Component {
                         <CardHeader
                             avatar={
                                 <Avatar aria-label="recipe" className={classes.avatar}>
-                                    {this.state.component.avatar}
+                                    H
                                 </Avatar>
                             }
                             action={
@@ -269,8 +284,9 @@ class HttpListener extends Component {
                                             <InputLabel htmlFor="outlined-adornment-amount">Path (Required)</InputLabel>
                                             <OutlinedInput
                                                 id="outlined-adornment-amount"
+                                                name="path"
                                                 value={this.state.component.properties.path}
-                                                // onChange={handleChange('amount')}
+                                                onChange={this.componentChanged}
                                                 startAdornment={<InputAdornment position="start"></InputAdornment>}
                                                 labelWidth={120}
                                             />
