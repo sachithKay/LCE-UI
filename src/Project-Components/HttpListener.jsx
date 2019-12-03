@@ -59,6 +59,9 @@ const useStyles = theme => ({
     expansionGroup: {
       width: '100%',
     },
+    DialogTitle: {
+        padding: 0,
+    },
 });
 
 const ExpansionPanel = withStyles({
@@ -234,7 +237,7 @@ class HttpListener extends Component {
                 </div>
                 <Dialog className={classes.dialog} open={this.state.open} onClose={this.handleClose}
                         aria-labelledby="form-dialog-title" maxWidth={'md'} fullWidth={true}>
-                    <DialogTitle id="form-dialog-title">
+                    <DialogTitle id="form-dialog-title" className={classes.DialogTitle}>
                         <CardHeader
                             avatar={
                                 <Avatar aria-label="recipe" className={classes.avatar}>
@@ -254,18 +257,18 @@ class HttpListener extends Component {
                             title={'HTTP Listener'}
                             subheader={this.state.component.id}
                         />
+                        <AppBar position="static" color={"default"}>
+                            <Tabs value={this.state.tabIndex} onChange={this.handleChange}
+                                  aria-label="simple tabs example" indicatorColor="primary"
+                                  textColor="primary" centered>
+                                <Tab label="Configuration" {...a11yProps(0)} />
+                                <Tab label="Output" {...a11yProps(1)} />
+                                <Tab label="Notes" {...a11yProps(2)} />
+                            </Tabs>
+                        </AppBar>
                     </DialogTitle>
                     <DialogContent>
                         <div className={classes.tabsDiv}>
-                            <AppBar position="static" color={"default"}>
-                                <Tabs value={this.state.tabIndex} onChange={this.handleChange}
-                                      aria-label="simple tabs example" indicatorColor="primary"
-                                      textColor="primary" centered>
-                                    <Tab label="Configuration" {...a11yProps(0)} />
-                                    <Tab label="Output" {...a11yProps(1)} />
-                                    <Tab label="Notes" {...a11yProps(2)} />
-                                </Tabs>
-                            </AppBar>
                             <TabPanel value={this.state.tabIndex} index={0}>
                                 <ExpansionPanel square expanded={this.state.expanded === 'panel1'}
                                                 onChange={this.handleExpansionPanelChange('panel1')}>
