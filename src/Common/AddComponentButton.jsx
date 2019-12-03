@@ -10,9 +10,6 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import DialogContent from "@material-ui/core/DialogContent";
 import TextField from "@material-ui/core/TextField";
 import CardHeader from "@material-ui/core/CardHeader";
-import InputLabel from "@material-ui/core/InputLabel";
-import OutlinedInput from "@material-ui/core/OutlinedInput";
-import InputAdornment from "@material-ui/core/InputAdornment";
 import FormControl from "@material-ui/core/FormControl";
 import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
@@ -123,19 +120,16 @@ class AddComponentButton extends Component {
                     </DialogTitle>
                     <DialogContent>
                         <FormControl fullWidth={true} className={classes.margin} variant="outlined">
-                            <InputLabel htmlFor="outlined-adornment-amount">Name (Required)</InputLabel>
-                            <OutlinedInput
+                            <TextField
                                 id="component-name"
                                 value={this.state.component.id}
                                 onChange={this.handleNameInput}
-                                startAdornment={<InputAdornment position="start"></InputAdornment>}
-                                labelWidth={122}
-                            />
+                                label="Name (Required)"
+                                variant="outlined"/>
                         </FormControl>
                         <br/><br/>
                         <Autocomplete
                             id="component-select"
-                            fullWidth={true}
                             options={this.state.componentsList}
                             classes={{
                                 option: classes.option,
